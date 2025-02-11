@@ -1,6 +1,6 @@
-# flutter_pagination
+# flutter_pagination example
 
-A generic implementation of offset-based pagination using Cubit (Bloc)
+An example of generic implementation of offset-based pagination using Cubit (Bloc)
 
 ## usage
 
