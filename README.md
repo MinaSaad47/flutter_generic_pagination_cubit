@@ -1,16 +1,27 @@
 # flutter_pagination
 
-A new Flutter project.
+A generic implementation of offset-based pagination using Cubit (Bloc)
 
-## Getting Started
+## usage
 
-This project is a starting point for a Flutter application.
+```dart
+class MyPagingCubit extends OffsetPagingCubit<List<String>, int> {
+  MyPagingCubit() : super(0); // Start page index
 
-A few resources to get you started if this is your first Flutter project:
+  @override
+  Future<List<String>> queryFn(int param) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return List.generate(10, (index) => "Item ${param * 10 + index}");
+  }
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  @override
+  int? getNextPageParam(int lastParam, List<String> lastPage) {
+    return lastPage.isEmpty ? null : lastParam + 1;
+  }
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  @override
+  int? getPreviousPageParam(int firstParam, List<String> firstPage) {
+    return firstParam > 0 ? firstParam - 1 : null;
+  }
+}
+```
